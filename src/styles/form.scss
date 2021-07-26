@@ -1,0 +1,36 @@
+$var1: #fff;
+$var2: #1e1e1e;
+
+.form {
+	background: $var1;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+	border-radius: 12px;
+	width: 100%;
+	max-width: 340px;
+	padding: 50px 30px 30px;
+	box-sizing: border-box;
+	min-height: 450px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&-title {
+		font-style: normal;
+		font-weight: 500;
+		font-size: 20px;
+		line-height: 20px;
+		text-align: center;
+		color: $var2;
+		margin-top: 0;
+		margin-bottom: 40px;
+	}
+
+	&-buttons_wrapper {
+		text-align: center;
+		margin-top: 30px;
+
+		a {
+			margin-top: 14px;
+		}
+	}
+}

@@ -1,0 +1,27 @@
+$var1: #3369f3;
+$var2: #fff;
+
+.button-primary {
+	background: $var1;
+	border-radius: 8px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 13px;
+	text-align: center;
+	color: $var2;
+	width: 100%;
+	padding: 12px 0;
+	max-width: 280px;
+}
+
+.button-circle {
+	width: 29px;
+	height: 29px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

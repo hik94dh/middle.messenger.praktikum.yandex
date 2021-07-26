@@ -1,0 +1,45 @@
+$var1: #fff;
+$var2: #000;
+
+.modal-wrapper {
+	z-index: 10;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	inset: 0;
+}
+
+.modal-backdrop {
+	position: fixed;
+	background: $var2;
+	opacity: 0.4;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+.modal {
+	background: $var1;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+	border-radius: 12px;
+	width: 340px;
+	text-align: center;
+	padding: 40px 30px;
+	box-sizing: border-box;
+	position: relative;
+
+	&-title {
+		margin-top: 0;
+		margin-bottom: 50px;
+		font-weight: 500;
+		font-size: 15px;
+		line-height: 20px;
+	}
+}
+
+.is-open-modal {
+	display: flex;
+}

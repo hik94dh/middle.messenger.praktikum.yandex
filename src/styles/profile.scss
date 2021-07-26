@@ -1,0 +1,172 @@
+$var1: #1e1e1e;
+$var2: #999;
+$var3: #eaeaea;
+$var4: #efefef;
+$var5: #000;
+$var6: #fff;
+$var7: #fbfbfb;
+$var8: #3369f3;
+$var9: #ff2f2f;
+
+.profile-wrapper {
+	display: flex;
+	height: inherit;
+	width: 100%;
+}
+
+.profile-inner_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 510px;
+	width: 100%;
+
+	ul {
+		margin: 60px 0;
+		width: inherit;
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			padding: 10px 0;
+			color: $var2;
+
+			&:first-child {
+				padding-top: 0;
+			}
+
+			&:not(:last-child) {
+				border-bottom: 1px solid $var3;
+			}
+
+			span:not(:last-child) {
+				color: $var1;
+			}
+
+			span {
+				font-weight: 500;
+				font-size: 13px;
+				line-height: 13px;
+				color: inherit;
+			}
+
+			input {
+				border: none;
+				padding: 0;
+				outline: none;
+				color: inherit;
+				font-weight: 500;
+				font-size: 13px;
+				line-height: 13px;
+				text-align: right;
+
+				&::-webkit-input-placeholder {
+					color: inherit;
+				}
+			}
+		}
+	}
+
+	form {
+		text-align: center;
+		width: inherit;
+	}
+
+	.profile-links {
+		margin: 0;
+	}
+}
+
+.profile-name {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 16px;
+	text-align: center;
+	color: $var1;
+	margin: 0;
+}
+
+.profile-image {
+	background: $var4;
+	width: 130px;
+	height: 130px;
+	border-radius: 50%;
+	margin-bottom: 20px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		background: $var5;
+		opacity: 0.5;
+
+		span {
+			visibility: inherit;
+		}
+	}
+
+	span {
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 14px;
+		color: $var6;
+		padding: 0 15px;
+		text-align: center;
+		visibility: hidden;
+	}
+
+	input {
+		display: none;
+	}
+
+	&_input {
+		align-items: center;
+
+		label {
+			cursor: pointer;
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 16px;
+			text-decoration-line: underline;
+			color: $var8;
+			max-width: 122px;
+			text-align: center;
+			margin-bottom: 45px;
+			min-height: 32px;
+		}
+
+		input {
+			visibility: hidden;
+			height: 0;
+		}
+	}
+
+	&_hint {
+		font-weight: 500;
+		font-size: 11px;
+		line-height: 11px;
+		color: $var9;
+		position: absolute;
+		bottom: 5px;
+		left: 0;
+		right: 0;
+		display: none;
+	}
+}
+
+.button-back_wrapper {
+	background: $var7;
+	width: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	svg {
+		transform: rotate(180deg);
+	}
+}
+
+.show-hint {
+	display: inline-block;
+}

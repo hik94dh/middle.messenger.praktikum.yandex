@@ -1,0 +1,408 @@
+$var1: #fbfbfb;
+$var2: #eaeaea;
+$var3: #999;
+$var4: #efefef;
+$var5: #1e1e1e;
+$var6: #3369f3;
+$var7: #fff;
+$var8: #e4edfd;
+$var9: #f5f5f5;
+$var10: #f8f8f8;
+
+.chat-page_wrapper {
+	display: flex;
+	height: inherit;
+}
+
+.sidebar_wrapper {
+	background: $var1;
+	max-width: 310px;
+	width: 100%;
+	padding: 20px 10px 0;
+	box-sizing: border-box;
+	text-align: right;
+	border-right: 1px solid $var2;
+	margin-top: -5px;
+}
+
+.chat-dialog {
+	flex-grow: 1;
+	padding: 10px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&_empty {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 12px;
+		color: $var3;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&_header nav {
+		color: $var5;
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 1px solid $var2;
+		padding-bottom: 10px;
+	}
+
+	&_header-link {
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
+	&_header-image {
+		display: inline-block;
+		width: 34px;
+		height: 34px;
+		border-radius: 50%;
+		background: $var4;
+	}
+
+	&_header-name {
+		font-weight: 600;
+		font-size: 13px;
+		line-height: 13px;
+		color: $var5;
+		margin-left: 10px;
+	}
+
+	&_header-dots {
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		background: $var9;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+
+		i {
+			width: 3px;
+			height: 3px;
+			border-radius: 50%;
+			background: $var5;
+			display: block;
+
+			&:not(:last-child) {
+				margin-bottom: 3px;
+			}
+		}
+
+		&-block {
+			position: absolute;
+			right: 10px;
+			top: 65px;
+			width: 210px;
+			visibility: hidden;
+		}
+	}
+
+	&_messages {
+		flex-grow: 1;
+
+		&-time {
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 12px;
+			color: $var3;
+			text-align: center;
+			margin: 48px 0 30px;
+		}
+	}
+
+	&_message-item {
+		padding: 11px;
+		max-width: 402px;
+		min-width: 114px;
+		width: max-content;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 15px;
+		color: $var5;
+		white-space: pre-line;
+		position: relative;
+		box-sizing: border-box;
+		margin-bottom: 10px;
+
+		&-from {
+			background: $var10;
+			border-radius: 0 12px 12px;
+		}
+
+		&-to {
+			background: $var8;
+			margin-left: auto;
+			border-radius: 12px 12px 0;
+		}
+
+		&-time {
+			font-weight: 500;
+			font-size: 9px;
+			line-height: 9px;
+			color: $var3;
+			position: absolute;
+			right: 11px;
+			bottom: 11px;
+
+			&-to {
+				color: $var6;
+				display: flex;
+				align-items: flex-end;
+
+				svg {
+					margin-right: 4px;
+				}
+			}
+		}
+
+		&-image {
+			max-width: 316px;
+			width: 100%;
+			position: relative;
+			margin-bottom: 10px;
+
+			span {
+				background: rgba(82, 82, 82, 0.5);
+				border-radius: 30px;
+				color: $var7;
+				padding: 2px 7px;
+			}
+
+			img {
+				width: inherit;
+				border: 1px solid $var2;
+				box-sizing: border-box;
+				border-radius: 12px;
+			}
+		}
+	}
+
+	&_footer {
+		display: flex;
+		align-items: center;
+
+		&-field {
+			background: $var4;
+			border-radius: 30px;
+			width: 100%;
+			border: none;
+			outline: none;
+			resize: none;
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 12px;
+			padding: 10px 20px;
+			height: 32px;
+			box-sizing: border-box;
+			margin: 0 10px;
+
+			&::placeholder {
+				color: $var3;
+			}
+		}
+
+		&-attach {
+			transform: rotate(45deg);
+			cursor: pointer;
+
+			svg {
+				fill: $var3;
+			}
+
+			&-block {
+				width: 162px;
+				height: 128px;
+				margin-bottom: 10px;
+				visibility: hidden;
+			}
+		}
+	}
+}
+
+.sidebar-search {
+	margin-bottom: 14px;
+
+	input {
+		width: 100%;
+		padding: 0 10px;
+		box-sizing: border-box;
+		border: none;
+		outline: none;
+		background: $var4;
+		border-radius: 5px;
+		height: 32px;
+
+		&::-webkit-input-placeholder {
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 12px;
+			color: $var3;
+			text-align: center;
+		}
+	}
+}
+
+.sidebar-link {
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 12px;
+	color: $var3;
+	text-decoration: none;
+	cursor: pointer;
+	margin-bottom: 23px;
+	margin-right: 5px;
+	display: inline-block;
+
+	&::after {
+		content: '';
+		border-left: 1px solid $var3;
+		border-top: 1px solid $var3;
+		display: inline-block;
+		width: 4px;
+		height: 4px;
+		transform: rotate(135deg);
+		position: relative;
+		top: -2px;
+		left: 5px;
+	}
+}
+
+.sidebar-chat {
+	border-top: 1px solid $var2;
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 0;
+	cursor: pointer;
+
+	&:last-child {
+		border-bottom: 1px solid $var2;
+	}
+
+	&_image {
+		background: $var4;
+		max-width: 47px;
+		width: 100%;
+		height: 47px;
+		border-radius: 50%;
+	}
+
+	&_text {
+		flex-grow: 1;
+		text-align: left;
+		padding: 0 10px;
+
+		h4 {
+			margin: 0;
+			font-weight: 600;
+			font-size: 13px;
+			line-height: 13px;
+			color: $var5;
+		}
+
+		p {
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 15px;
+			color: $var3;
+			margin: 4px 0 0;
+			-webkit-line-clamp: 2;
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+
+			b {
+				color: $var5;
+			}
+		}
+	}
+
+	&_data-time {
+		font-weight: 500;
+		font-size: 9px;
+		line-height: 13px;
+		color: $var3;
+		white-space: pre;
+		vertical-align: top;
+	}
+
+	&_data-messages {
+		background: $var6;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		font-weight: 500;
+		font-size: 11px;
+		line-height: 12px;
+		color: $var7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 14px auto 0;
+	}
+
+	&_is-active {
+		position: relative;
+
+		> * {
+			z-index: 2;
+		}
+
+		&::after {
+			content: '';
+			background: $var8;
+			position: absolute;
+			width: calc(100% + 20px);
+			height: calc(100% - 4px);
+			z-index: 1;
+			top: 2px;
+			left: -10px;
+		}
+	}
+}
+
+.popper {
+	background: $var7;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+	border-radius: 12px;
+
+	svg {
+		fill: $var6;
+		height: 22px;
+		width: 22px;
+	}
+
+	li span {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 14px;
+		color: $var5;
+		vertical-align: text-top;
+		padding-left: 7px;
+	}
+
+	li {
+		margin: 15px;
+		cursor: pointer;
+	}
+}
+
+.attach_is-open {
+	visibility: visible;
+
+	svg {
+		fill: $var6;
+	}
+
+	i {
+		background: $var6;
+	}
+}
