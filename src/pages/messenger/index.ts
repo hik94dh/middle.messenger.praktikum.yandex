@@ -1,13 +1,13 @@
-import Block from '../../modules/block';
-import template from './template.hbs';
-import { findInputsForValidation } from '../../utils/validation';
+import Block from '../../modules/block.js';
+import { template } from './template.js';
+import { findInputsForValidation } from '../../utils/validation.js';
 
-import { Modal } from '../../components/Modal/Modal';
-import { Button } from '../../components/Button/Button';
-import { Input } from '../../components/Input/Input';
+import { Modal } from '../../components/Modal/Modal.js';
+import { Button } from '../../components/Button/Button.js';
+import { Input } from '../../components/Input/Input.js';
 
-import ChatsApi from '../../api/chatsApi';
-import { MESSENGER_PATH } from '../../routes/constants';
+import ChatsApi from '../../api/chatsApi.js';
+import { MESSENGER_PATH } from '../../routes/constants.js';
 
 const data = {
 	profile: 'Профиль',
@@ -129,10 +129,6 @@ export default class Messenger extends Block {
 		}
 
 		return findInputsForValidation;
-	}
-
-	render(): string {
-		return template(this.props);
 	}
 }
 

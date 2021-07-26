@@ -1,4 +1,4 @@
-import { EventBus } from './eventBus';
+import { EventBus } from './eventBus.js';
 
 export default class Block {
 	static EVENTS = {
@@ -54,12 +54,16 @@ export default class Block {
 		return document.createElement(tagName);
 	}
 
+	compile(props: object): string {
+		return Handlebars.compile(this._meta.template)(props);
+	}
+
 	_render() {
 		this._element.innerHTML = this.render();
 	}
 
 	render(): string {
-		return ''
+		return this.compile(this.props);
 	}
 
 	getContent(): HTMLElement {

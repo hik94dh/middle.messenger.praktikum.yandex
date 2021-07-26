@@ -1,12 +1,12 @@
-import BlockComponent from '../../modules/block';
-import template from './template.hbs';
+import BlockComponent from '../../modules/block.js';
+import { modalTemplate } from './template.js';
 
 export class Modal extends BlockComponent {
 	constructor(props) {
-		super(template, props);
+		super(modalTemplate, props);
 	}
 
-	render(): string {
-		return template(this.props);
+	render(): any {
+		return this.compile(this.props);
 	}
 }

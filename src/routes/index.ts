@@ -1,10 +1,10 @@
-import Router from '../modules/router';
-import { signInPage } from '../pages/sign-in/index';
-import { signUpPage } from '../pages/sign-up/index';
-import { profilePage } from '../pages/profile/index';
-import { messengerPage } from '../pages/messenger/index';
-import { page500 } from '../pages/500/index';
-import { page404 } from '../pages/404/index';
+import Router from '../modules/router.js';
+import { signInPage } from '../pages/sign-in/index.js';
+import { signUpPage } from '../pages/sign-up/index.js';
+import { profilePage } from '../pages/profile/index.js';
+import { messengerPage } from '../pages/messenger/index.js';
+import { page500 } from '../pages/500/index.js';
+import { page404 } from '../pages/404/index.js';
 
 import {
 	MAIN_PATH,
@@ -14,7 +14,7 @@ import {
 	MESSENGER_PATH,
 	SERVER_ERROR_PATH,
 	NOT_FOUND_PATH,
-} from './constants';
+} from './constants.js';
 
 const router = new Router('app');
 

@@ -1,5 +1,5 @@
-import Block from '../../modules/block';
-import template from './template.hbs';
+import Block from '../../modules/block.js';
+import { template } from './template.js';
 
 const data = {
 	title: '404',
@@ -13,10 +13,6 @@ const data = {
 export default class Page404 extends Block {
 	constructor(props) {
 		super(template, props);
-	}
-
-	render(): string {
-		return template(this.props);
 	}
 }
 

@@ -1,0 +1,17 @@
+export const inputTemplate = `
+<div class="form-input_wrapper {{class}}">
+    <label for="{{id}}" id="{{labelId}}" class="form-input_placeholder">{{label}}</label>
+    <input
+        id="{{id}}"
+        name="{{name}}"
+        type="{{type}}"
+        accept="{{accept}}"
+        multiple="{{multiple}}"
+        class="js-input"
+        placeholder="{{placeholder}}"
+        value="{{inputValue}}"
+        {{attr}}
+    >
+</div>
+`;
+//# sourceMappingURL=template.js.map

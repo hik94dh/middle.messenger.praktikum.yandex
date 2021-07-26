@@ -1,1 +1,1 @@
-declare module '*.hbs';
+declare const Handlebars;

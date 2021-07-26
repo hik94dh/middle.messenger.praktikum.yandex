@@ -1,9 +1,9 @@
 $var1: #1e1e1e;
-$var2: #999;
+$var2: #999999;
 $var3: #eaeaea;
 $var4: #efefef;
-$var5: #000;
-$var6: #fff;
+$var5: #000000;
+$var6: #ffffff;
 $var7: #fbfbfb;
 $var8: #3369f3;
 $var9: #ff2f2f;
@@ -13,43 +13,35 @@ $var9: #ff2f2f;
 	height: inherit;
 	width: 100%;
 }
-
 .profile-inner_wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	max-width: 510px;
 	width: 100%;
-
 	ul {
 		margin: 60px 0;
 		width: inherit;
-
 		li {
 			display: flex;
 			justify-content: space-between;
 			padding: 10px 0;
 			color: $var2;
-
 			&:first-child {
 				padding-top: 0;
 			}
-
 			&:not(:last-child) {
 				border-bottom: 1px solid $var3;
 			}
-
 			span:not(:last-child) {
 				color: $var1;
 			}
-
 			span {
 				font-weight: 500;
 				font-size: 13px;
 				line-height: 13px;
 				color: inherit;
 			}
-
 			input {
 				border: none;
 				padding: 0;
@@ -59,24 +51,20 @@ $var9: #ff2f2f;
 				font-size: 13px;
 				line-height: 13px;
 				text-align: right;
-
 				&::-webkit-input-placeholder {
 					color: inherit;
 				}
 			}
 		}
 	}
-
 	form {
 		text-align: center;
 		width: inherit;
 	}
-
 	.profile-links {
 		margin: 0;
 	}
 }
-
 .profile-name {
 	font-weight: 600;
 	font-size: 16px;
@@ -85,7 +73,6 @@ $var9: #ff2f2f;
 	color: $var1;
 	margin: 0;
 }
-
 .profile-image {
 	background: $var4;
 	width: 130px;
@@ -96,16 +83,13 @@ $var9: #ff2f2f;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	&:hover {
 		background: $var5;
 		opacity: 0.5;
-
 		span {
 			visibility: inherit;
 		}
 	}
-
 	span {
 		font-weight: 500;
 		font-size: 13px;
@@ -115,14 +99,11 @@ $var9: #ff2f2f;
 		text-align: center;
 		visibility: hidden;
 	}
-
 	input {
 		display: none;
 	}
-
 	&_input {
 		align-items: center;
-
 		label {
 			cursor: pointer;
 			font-weight: 500;
@@ -135,13 +116,11 @@ $var9: #ff2f2f;
 			margin-bottom: 45px;
 			min-height: 32px;
 		}
-
 		input {
 			visibility: hidden;
 			height: 0;
 		}
 	}
-
 	&_hint {
 		font-weight: 500;
 		font-size: 11px;
@@ -154,19 +133,16 @@ $var9: #ff2f2f;
 		display: none;
 	}
 }
-
 .button-back_wrapper {
 	background: $var7;
 	width: 64px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	svg {
 		transform: rotate(180deg);
 	}
 }
-
 .show-hint {
 	display: inline-block;
 }
