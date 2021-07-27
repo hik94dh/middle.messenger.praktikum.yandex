@@ -1,12 +1,12 @@
-import Block from '../../modules/block.js';
-import { template } from './template.js';
-import { findInputsForValidation } from '../../utils/validation.js';
+import Block from '../../modules/block';
+import template from './template.hbs';
+import { getDataFromForm } from '../../utils/getDataFromForm';
 
-import { Button } from '../../components/Button/Button.js';
-import { Input } from '../../components/Input/Input.js';
+import { Button } from '../../components/Button/Button';
+import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi.js';
-import { MESSENGER_PATH } from '../../routes/constants.js';
+import AuthApi from '../../api/authApi';
+import { MESSENGER_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signInButton';
 
@@ -37,7 +37,7 @@ const data = {
 };
 
 interface Prop {
-	[items: string]: unknown;
+	[items: string]: any;
 }
 
 export default class SignIn extends Block {
@@ -52,12 +52,18 @@ export default class SignIn extends Block {
 			const button = document.getElementById(BUTTON_ID);
 
 			button?.addEventListener('click', () => {
-				AuthApi.signIn({
-					login: 'Login',
-					password: 'string',
-				})
+				const data = getDataFromForm();
+
+				// const data = {
+				// 	login: 'Login',
+				// 	password: 'string',
+				// }
+				AuthApi.signIn(data)
 					.then((res: Prop) => {
-						if (res.status === 200) {
+						if (
+							res.status === 200 ||
+							(res.status === 400 && JSON.parse(res.responseText).reason === 'User already in system')
+						) {
 							window.history.pushState({}, '', MESSENGER_PATH);
 							document.location.reload();
 						}
@@ -69,8 +75,8 @@ export default class SignIn extends Block {
 		});
 	}
 
-	componentDidMount() {
-		return findInputsForValidation;
+	render(): string {
+		return template(this.props);
 	}
 }
 

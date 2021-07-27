@@ -1,5 +1,5 @@
-$var1: #ffffff;
-$var2: #000000;
+$var1: #fff;
+$var2: #000;
 
 .modal-wrapper {
 	z-index: 10;
@@ -9,6 +9,7 @@ $var2: #000000;
 	position: fixed;
 	inset: 0;
 }
+
 .modal-backdrop {
 	position: fixed;
 	background: $var2;
@@ -19,6 +20,7 @@ $var2: #000000;
 	bottom: 0;
 	z-index: -1;
 }
+
 .modal {
 	background: $var1;
 	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
@@ -28,6 +30,7 @@ $var2: #000000;
 	padding: 40px 30px;
 	box-sizing: border-box;
 	position: relative;
+
 	&-title {
 		margin-top: 0;
 		margin-bottom: 50px;
@@ -36,6 +39,7 @@ $var2: #000000;
 		line-height: 20px;
 	}
 }
+
 .is-open-modal {
 	display: flex;
 }

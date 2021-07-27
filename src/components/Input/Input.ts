@@ -1,12 +1,20 @@
-import BlockComponent from '../../modules/block.js';
-import { inputTemplate } from './template.js';
+import BlockComponent from '../../modules/block';
+import template from './template.hbs';
+import { findInputsForValidation } from '../../utils/validation';
+// import templateProfile from './template-profile.hbs';
+// import { PROFILE_PATH } from '../../routes/constants';
+// const isProfilePage = document.location.pathname === PROFILE_PATH;
 
 export class Input extends BlockComponent {
 	constructor(props) {
-		super(inputTemplate, props);
+		super(template, props);
 	}
 
-	render(): any {
-		return this.compile(this.props);
+	componentDidMount() {
+		return findInputsForValidation;
+	}
+
+	render(): string {
+		return template(this.props);
 	}
 }

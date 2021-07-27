@@ -1,7 +1,7 @@
 import BlockComponent from '../../modules/block';
 import template from './template.hbs';
 
-export class Button extends BlockComponent {
+export class Form extends BlockComponent {
 	constructor(props) {
 		super(template, props);
 	}

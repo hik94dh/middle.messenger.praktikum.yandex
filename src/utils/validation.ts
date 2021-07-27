@@ -1,4 +1,4 @@
-import { validation } from './validationReg.js';
+import { validation } from './validationReg';
 
 export const checkValidation = (input) => {
 	const showResult = (isCheck) => {

@@ -6,7 +6,7 @@ const METHODS = {
 };
 
 export class HTTPTransport {
-	URL: string = 'https://ya-praktikum.tech/api/v2';
+	URL = 'https://ya-praktikum.tech/api/v2';
 	_url: string;
 
 	constructor() {
@@ -57,7 +57,7 @@ export class HTTPTransport {
 				xhr.send();
 				return;
 			}
-			if (method === METHODS.POST) {
+			if (method === METHODS.POST || method === METHODS.PUT) {
 				xhr.send(JSON.stringify(data));
 				return;
 			}

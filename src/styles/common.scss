@@ -1,24 +1,29 @@
 $var1: #3369f3;
-$var2: #ff0000;
+$var2: #f00;
 $var3: #1e1e1e;
-$var4: #999999;
+$var4: #999;
 
 body {
 	height: 100vh;
 	font-family: 'Inter', sans-serif;
 	overflow: hidden;
+	margin: 0;
 }
+
 ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
+
 main {
 	height: inherit;
+
 	> div {
 		height: inherit;
 	}
 }
+
 .container {
 	display: flex;
 	justify-content: center;
@@ -36,6 +41,7 @@ main {
 	text-decoration: none;
 	display: inline-block;
 }
+
 .link-secondary {
 	color: $var2;
 }
@@ -51,6 +57,7 @@ main {
 	font-style: normal;
 	color: $var3;
 }
+
 .form-input_placeholder {
 	font-style: normal;
 	font-weight: 500;
@@ -58,18 +65,31 @@ main {
 	line-height: 9px;
 	color: $var4;
 }
+
 .form .form-input_wrapper,
 .modal .form-input_wrapper {
 	margin-bottom: 16px;
+
 	input {
 		height: 30px;
 	}
 }
+
 .form-input_wrapper {
 	display: flex;
 	flex-direction: column;
 	text-align: left;
+	width: 100%;
+
 	.input-error {
 		border-color: red;
 	}
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.flex-row {
+	flex-direction: row;
 }

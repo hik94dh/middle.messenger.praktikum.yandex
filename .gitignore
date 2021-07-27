@@ -1,0 +1,9 @@
+# prod
+/build
+
+# dependencies
+/node_modules
+
+# misc
+.DS_Store
+.idea

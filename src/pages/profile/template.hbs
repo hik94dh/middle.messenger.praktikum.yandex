@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="profile-wrapper">
+        <div class="button-back_wrapper">
+            {{{buttonBack}}}
+        </div>
+        <div class="container">
+            <div class="profile-inner_wrapper">
+                <div class="profile-image" id="{{changeImageId}}">
+					<img src="{{avatarPath}}" />
+                    <span>{{avatarAlt}}</span>
+                </div>
+                <h2 class="profile-name">{{first_name}}</h2>
+				<form action="#">
+					<ul>
+						{{#if changePasswordShow}}
+							{{#each changePasswordList}}
+								<li>
+									{{{ this }}}
+								</li>
+							{{/each}}
+						{{else}}
+							{{#each inputs}}
+								<li>
+									{{{ this }}}
+								</li>
+							{{/each}}
+						{{/if}}
+					</ul>
+				</form>
+
+                {{#if linksShow}}
+                    <ul class="profile-links">
+                        {{#each links}}
+                            <li><a href="{{href}}" id="{{linkId}}" class="link-primary {{class}}"><span>{{text}}</span></a></li>
+                        {{/each}}
+                    </ul>
+                {{else}}
+                    {{{buttonSave}}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    {{{modal}}}
+</div>

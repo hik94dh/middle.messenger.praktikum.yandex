@@ -1,4 +1,3 @@
-// @ts-ignore
 import sinon from 'sinon';
 import { HTTPTransport } from './httpTransport';
 

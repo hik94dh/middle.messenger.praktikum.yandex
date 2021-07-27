@@ -1,10 +1,10 @@
 $var1: #fbfbfb;
 $var2: #eaeaea;
-$var3: #999999;
+$var3: #999;
 $var4: #efefef;
 $var5: #1e1e1e;
 $var6: #3369f3;
-$var7: #ffffff;
+$var7: #fff;
 $var8: #e4edfd;
 $var9: #f5f5f5;
 $var10: #f8f8f8;
@@ -13,6 +13,7 @@ $var10: #f8f8f8;
 	display: flex;
 	height: inherit;
 }
+
 .sidebar_wrapper {
 	background: $var1;
 	max-width: 310px;
@@ -23,12 +24,14 @@ $var10: #f8f8f8;
 	border-right: 1px solid $var2;
 	margin-top: -5px;
 }
+
 .chat-dialog {
 	flex-grow: 1;
 	padding: 10px 20px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
 	&_empty {
 		font-weight: 500;
 		font-size: 12px;
@@ -39,6 +42,7 @@ $var10: #f8f8f8;
 		align-items: center;
 		justify-content: center;
 	}
+
 	&_header nav {
 		color: $var5;
 		display: flex;
@@ -46,6 +50,7 @@ $var10: #f8f8f8;
 		border-bottom: 1px solid $var2;
 		padding-bottom: 10px;
 	}
+
 	&_header-link {
 		text-decoration: none;
 		color: inherit;
@@ -53,6 +58,7 @@ $var10: #f8f8f8;
 		align-items: center;
 		position: relative;
 	}
+
 	&_header-image {
 		display: inline-block;
 		width: 34px;
@@ -60,6 +66,7 @@ $var10: #f8f8f8;
 		border-radius: 50%;
 		background: $var4;
 	}
+
 	&_header-name {
 		font-weight: 600;
 		font-size: 13px;
@@ -67,6 +74,7 @@ $var10: #f8f8f8;
 		color: $var5;
 		margin-left: 10px;
 	}
+
 	&_header-dots {
 		width: 25px;
 		height: 25px;
@@ -76,16 +84,19 @@ $var10: #f8f8f8;
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
+
 		i {
 			width: 3px;
 			height: 3px;
 			border-radius: 50%;
 			background: $var5;
 			display: block;
+
 			&:not(:last-child) {
 				margin-bottom: 3px;
 			}
 		}
+
 		&-block {
 			position: absolute;
 			right: 10px;
@@ -94,8 +105,10 @@ $var10: #f8f8f8;
 			visibility: hidden;
 		}
 	}
+
 	&_messages {
 		flex-grow: 1;
+
 		&-time {
 			font-weight: 500;
 			font-size: 12px;
@@ -105,6 +118,7 @@ $var10: #f8f8f8;
 			margin: 48px 0 30px;
 		}
 	}
+
 	&_message-item {
 		padding: 11px;
 		max-width: 402px;
@@ -118,15 +132,18 @@ $var10: #f8f8f8;
 		position: relative;
 		box-sizing: border-box;
 		margin-bottom: 10px;
+
 		&-from {
 			background: $var10;
 			border-radius: 0 12px 12px;
 		}
+
 		&-to {
 			background: $var8;
 			margin-left: auto;
 			border-radius: 12px 12px 0;
 		}
+
 		&-time {
 			font-weight: 500;
 			font-size: 9px;
@@ -135,26 +152,31 @@ $var10: #f8f8f8;
 			position: absolute;
 			right: 11px;
 			bottom: 11px;
+
 			&-to {
 				color: $var6;
 				display: flex;
 				align-items: flex-end;
+
 				svg {
 					margin-right: 4px;
 				}
 			}
 		}
+
 		&-image {
 			max-width: 316px;
 			width: 100%;
 			position: relative;
 			margin-bottom: 10px;
+
 			span {
 				background: rgba(82, 82, 82, 0.5);
 				border-radius: 30px;
 				color: $var7;
 				padding: 2px 7px;
 			}
+
 			img {
 				width: inherit;
 				border: 1px solid $var2;
@@ -163,9 +185,11 @@ $var10: #f8f8f8;
 			}
 		}
 	}
+
 	&_footer {
 		display: flex;
 		align-items: center;
+
 		&-field {
 			background: $var4;
 			border-radius: 30px;
@@ -180,16 +204,20 @@ $var10: #f8f8f8;
 			height: 32px;
 			box-sizing: border-box;
 			margin: 0 10px;
+
 			&::placeholder {
 				color: $var3;
 			}
 		}
+
 		&-attach {
 			transform: rotate(45deg);
 			cursor: pointer;
+
 			svg {
 				fill: $var3;
 			}
+
 			&-block {
 				width: 162px;
 				height: 128px;
@@ -199,8 +227,10 @@ $var10: #f8f8f8;
 		}
 	}
 }
+
 .sidebar-search {
 	margin-bottom: 14px;
+
 	input {
 		width: 100%;
 		padding: 0 10px;
@@ -210,6 +240,7 @@ $var10: #f8f8f8;
 		background: $var4;
 		border-radius: 5px;
 		height: 32px;
+
 		&::-webkit-input-placeholder {
 			font-weight: 500;
 			font-size: 12px;
@@ -219,6 +250,7 @@ $var10: #f8f8f8;
 		}
 	}
 }
+
 .sidebar-link {
 	font-weight: 500;
 	font-size: 12px;
@@ -229,7 +261,8 @@ $var10: #f8f8f8;
 	margin-bottom: 23px;
 	margin-right: 5px;
 	display: inline-block;
-	&:after {
+
+	&::after {
 		content: '';
 		border-left: 1px solid $var3;
 		border-top: 1px solid $var3;
@@ -242,15 +275,18 @@ $var10: #f8f8f8;
 		left: 5px;
 	}
 }
+
 .sidebar-chat {
 	border-top: 1px solid $var2;
 	display: flex;
 	justify-content: space-between;
 	padding: 12px 0;
 	cursor: pointer;
+
 	&:last-child {
 		border-bottom: 1px solid $var2;
 	}
+
 	&_image {
 		background: $var4;
 		max-width: 47px;
@@ -258,10 +294,12 @@ $var10: #f8f8f8;
 		height: 47px;
 		border-radius: 50%;
 	}
+
 	&_text {
 		flex-grow: 1;
 		text-align: left;
 		padding: 0 10px;
+
 		h4 {
 			margin: 0;
 			font-weight: 600;
@@ -269,6 +307,7 @@ $var10: #f8f8f8;
 			line-height: 13px;
 			color: $var5;
 		}
+
 		p {
 			font-weight: 500;
 			font-size: 12px;
@@ -279,11 +318,13 @@ $var10: #f8f8f8;
 			display: -webkit-box;
 			overflow: hidden;
 			-webkit-box-orient: vertical;
+
 			b {
 				color: $var5;
 			}
 		}
 	}
+
 	&_data-time {
 		font-weight: 500;
 		font-size: 9px;
@@ -292,6 +333,7 @@ $var10: #f8f8f8;
 		white-space: pre;
 		vertical-align: top;
 	}
+
 	&_data-messages {
 		background: $var6;
 		width: 20px;
@@ -306,12 +348,15 @@ $var10: #f8f8f8;
 		align-items: center;
 		margin: 14px auto 0;
 	}
+
 	&_is-active {
 		position: relative;
+
 		> * {
 			z-index: 2;
 		}
-		&:after {
+
+		&::after {
 			content: '';
 			background: $var8;
 			position: absolute;
@@ -323,15 +368,18 @@ $var10: #f8f8f8;
 		}
 	}
 }
+
 .popper {
 	background: $var7;
 	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
 	border-radius: 12px;
+
 	svg {
 		fill: $var6;
 		height: 22px;
 		width: 22px;
 	}
+
 	li span {
 		font-weight: 500;
 		font-size: 12px;
@@ -340,16 +388,20 @@ $var10: #f8f8f8;
 		vertical-align: text-top;
 		padding-left: 7px;
 	}
+
 	li {
 		margin: 15px;
 		cursor: pointer;
 	}
 }
+
 .attach_is-open {
 	visibility: visible;
+
 	svg {
 		fill: $var6;
 	}
+
 	i {
 		background: $var6;
 	}

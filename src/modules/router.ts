@@ -1,5 +1,5 @@
-import { render } from '../utils/render.js';
-import Block from './block.js';
+import { render } from '../utils/render';
+import Block from './block';
 
 function isEqual(lhs, rhs) {
 	return lhs === rhs;

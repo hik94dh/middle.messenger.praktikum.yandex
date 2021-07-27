@@ -1,4 +1,4 @@
-$var1: #ffffff;
+$var1: #fff;
 $var2: #1e1e1e;
 
 .form {
@@ -13,6 +13,7 @@ $var2: #1e1e1e;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
 	&-title {
 		font-style: normal;
 		font-weight: 500;
@@ -23,9 +24,11 @@ $var2: #1e1e1e;
 		margin-top: 0;
 		margin-bottom: 40px;
 	}
+
 	&-buttons_wrapper {
 		text-align: center;
 		margin-top: 30px;
+
 		a {
 			margin-top: 14px;
 		}

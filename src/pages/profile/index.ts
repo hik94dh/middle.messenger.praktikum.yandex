@@ -1,92 +1,57 @@
-import Block from '../../modules/block.js';
-import { template } from './template.js';
-import { findInputsForValidation } from '../../utils/validation.js';
+import Block from '../../modules/block';
+import template from './template.hbs';
+import { getDataFromForm } from '../../utils/getDataFromForm';
 
-import { Modal } from '../../components/Modal/Modal.js';
-import { Button } from '../../components/Button/Button.js';
-import { Input } from '../../components/Input/Input.js';
+import { Modal } from '../../components/Modal/Modal';
+import { Button } from '../../components/Button/Button';
+import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi.js';
-import { PROFILE_PATH, MAIN_PATH } from '../../routes/constants.js';
+import AuthApi from '../../api/authApi';
+import UsersApi from '../../api/usersApi';
+import { PROFILE_PATH, MAIN_PATH } from '../../routes/constants';
 
 const CHANGE_IMAGE_ID = 'changeImage';
 const CHANGE_IMAGE_INPUT_ID = 'changeImageInput';
 const CHANGE_IMAGE_BUTTON_ID = 'changeImageButton';
+const SAVE_BUTTON_ID = 'saveButton';
 const CHANGE_IMAGE_LABEL_ID = 'changeImageLabel';
 const BUTTON_BACK_ID = 'buttonBack';
 const LINK_ID = 'js-link';
 const LINK_LOGOUT_ID = 'js-link-logout';
+const CHANGE_DATA_LINK_ID = 'changeDataLink';
+const CHANGE_PASSWORD_LINK_ID = 'changePasswordLink';
+import { store } from '../../modules/store';
 
-const data = {
-	imageText: 'Поменять аватар',
+const changePasswordListData = [
+	{ name: 'oldPassword', label: 'Старый пароль', value: '', type: 'password', placeholder: '••••••••' },
+	{ name: 'newPassword', label: 'Новый пароль', value: '', type: 'password', placeholder: '•••••••••••' },
+	{ name: 'newPassword', label: 'Повторите новый пароль', value: '', type: 'password', placeholder: '•••••••••••' },
+];
+
+const defaultData = {
+	avatarPath: '',
+	avatarAlt: 'Поменять аватар',
 	changeImageId: CHANGE_IMAGE_ID,
-	name: 'Иван',
-
-	dataList: [
-		{
-			left: 'Почта',
-			right: new Input({
-				placeholder: 'pochta@yandex.ru',
-				type: 'text',
-				name: 'email',
-				attr: 'readonly',
-			}).render(),
-		},
-		{
-			left: 'Логин',
-			right: new Input({
-				placeholder: 'ivanivanov',
-				type: 'text',
-				name: 'login',
-				attr: 'readonly',
-			}).render(),
-		},
-		{
-			left: 'Имя',
-			right: new Input({
-				placeholder: 'Иван',
-				type: 'text',
-				name: 'first_name',
-				attr: 'readonly',
-			}).render(),
-		},
-		{
-			left: 'Фамилия',
-			right: new Input({
-				placeholder: 'Иванов',
-				type: 'text',
-				name: 'second_name',
-				attr: 'readonly',
-			}).render(),
-		},
-		{
-			left: 'Имя в чате',
-			right: new Input({
-				placeholder: 'Иван',
-				type: 'text',
-				name: 'display_name',
-				attr: 'readonly',
-			}).render(),
-		},
-		{
-			left: 'Телефон',
-			right: new Input({
-				placeholder: '+7 (909) 967 30 30',
-				type: 'tel',
-				name: 'phone',
-				attr: 'readonly',
-			}).render(),
-		},
-	],
+	buttonBack: new Button({
+		isCircle: true,
+		class: 'button-circle',
+		id: BUTTON_BACK_ID,
+	}).render(),
+	buttonSave: new Button({
+		text: 'Сохранить',
+		id: SAVE_BUTTON_ID,
+	}).render(),
 	linksShow: true,
 	links: [
 		{
 			text: 'Изменить данные',
 			class: LINK_ID,
+			linkId: CHANGE_DATA_LINK_ID,
 		},
 		{
 			text: 'Изменить пароль',
 			class: LINK_ID,
+			linkId: CHANGE_PASSWORD_LINK_ID,
 		},
 		{
 			href: '/',
@@ -94,43 +59,8 @@ const data = {
 			class: `link-secondary ${LINK_LOGOUT_ID}`,
 		},
 	],
-
 	changePasswordShow: false,
-	changePasswordList: [
-		{
-			left: 'Старый пароль',
-			right: new Input({
-				placeholder: '•••••••••',
-				type: 'password',
-				name: 'oldPassword',
-			}).render(),
-		},
-		{
-			left: 'Новый пароль',
-			right: new Input({
-				placeholder: '•••••••••••',
-				type: 'password',
-				name: 'newPassword',
-			}).render(),
-		},
-		{
-			left: 'Повторите новый пароль',
-			right: new Input({
-				placeholder: '•••••••••••',
-				type: 'password',
-				name: 'newPassword',
-			}).render(),
-		},
-	],
-
-	buttonBack: new Button({
-		isCircle: true,
-		class: 'button-circle',
-		id: BUTTON_BACK_ID,
-	}).render(),
-	button: new Button({
-		text: 'Сохранить',
-	}).render(),
+	changePasswordList: changePasswordListData.map((props) => new Input(props).render()),
 	modal: new Modal({
 		id: 'profile-image_input',
 		title: 'Загрузите файл',
@@ -140,7 +70,7 @@ const data = {
 			type: 'file',
 			accept: 'image/*,image/jpeg',
 			multiple: true,
-			id: CHANGE_IMAGE_INPUT_ID,
+			name: CHANGE_IMAGE_INPUT_ID,
 			labelId: CHANGE_IMAGE_LABEL_ID,
 		}).render(),
 		hint: {
@@ -156,10 +86,10 @@ const data = {
 };
 
 export default class Profile extends Block {
-	constructor(props) {
-		super(template, props);
+	props: Record<string, any>;
 
-		this.clickLink();
+	constructor(props = {}) {
+		super(template, props);
 	}
 
 	componentDidMount() {
@@ -167,12 +97,37 @@ export default class Profile extends Block {
 			AuthApi.user().then(({ response, status }) => {
 				if (status === 200) {
 					const data = JSON.parse(response);
-					console.log('obj', data);
+					// Получаем данные, формируем массив, добавляем в стор
+					const arr = [
+						{ name: 'email', label: 'Почта', value: data.email, type: 'email', attr: 'readonly' },
+						{ name: 'login', label: 'Логин', value: data.login, type: 'text', attr: 'readonly' },
+						{ name: 'first_name', label: 'Имя', value: data.first_name, type: 'text', attr: 'readonly' },
+						{
+							name: 'second_name',
+							label: 'Фамилия',
+							value: data.second_name,
+							type: 'text',
+							attr: 'readonly',
+						},
+						{
+							name: 'display_name',
+							label: 'Имя в чате',
+							value: data.display_name,
+							type: 'text',
+							attr: 'readonly',
+						},
+						{ name: 'phone', label: 'Телефон', value: data.phone, type: 'phone', attr: 'readonly' },
+					];
+
+					store.update({
+						...data,
+						avatarPath: data.avatar,
+						inputs: arr.map((props) => new Input({ ...props, class: 'justify-between flex-row' }).render()),
+					});
+					this.setProps(store.state);
 				}
 			});
 		}
-
-		return findInputsForValidation;
 	}
 
 	profileEvents() {
@@ -180,11 +135,40 @@ export default class Profile extends Block {
 		const modal = document.querySelector('.js-modal');
 		const changeImageInput = <HTMLInputElement>document.getElementById(CHANGE_IMAGE_INPUT_ID);
 		const changeImageButton = document.getElementById(CHANGE_IMAGE_BUTTON_ID);
+		const saveButton = document.getElementById(SAVE_BUTTON_ID);
 		const changeImageHint = document.querySelector('.profile-image_hint');
 		const changeImageLabel = <HTMLInputElement>document.getElementById(CHANGE_IMAGE_LABEL_ID);
 		const modalTitle = document.querySelector('.js-modal-title');
 		const buttonBack = document.getElementById(BUTTON_BACK_ID);
 		const modalBackdrop = document.querySelector('.js-modal-backdrop');
+		const changeDataLink = document.getElementById(CHANGE_DATA_LINK_ID);
+		const changePasswordLink = document.getElementById(CHANGE_PASSWORD_LINK_ID);
+		const linkLogout = document.querySelector(`.${LINK_LOGOUT_ID}`);
+
+		changeDataLink?.addEventListener('click', (e) => {
+			e.preventDefault();
+			this.setProps({ linksShow: false });
+			// При клике на первую ссылку убираем атрибут чтобы можно было ввести данные
+			const inputsCollection = document.querySelectorAll<HTMLInputElement>('.js-input');
+
+			inputsCollection.forEach((input) => {
+				input.removeAttribute('readonly');
+			});
+		});
+		changePasswordLink?.addEventListener('click', (e) => {
+			e.preventDefault();
+			this.setProps({ linksShow: false, changePasswordShow: true });
+		});
+		linkLogout?.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			AuthApi.logout().then(({ status }) => {
+				if (status === 200) {
+					window.history.pushState({}, '', MAIN_PATH);
+					document.location.reload();
+				}
+			});
+		});
 
 		// При клике на картинку открыть модалку
 		changeImage?.addEventListener('click', () => {
@@ -204,10 +188,32 @@ export default class Profile extends Block {
 				changeImageHint?.classList.remove('show-hint');
 			}
 		});
-		changeImageButton?.addEventListener('click', () => {
+		changeImageButton?.addEventListener('click', (e) => {
 			// При клике на кнопку показать подсказку, если ничего не загружено
+			e.preventDefault();
 			if (!changeImageInput?.files?.length) {
 				changeImageHint?.classList.add('show-hint');
+			} else {
+				console.log('доделать обновление аватара');
+			}
+		});
+
+		// При клике на кнопку обновить данные
+		saveButton?.addEventListener('click', () => {
+			const data = getDataFromForm();
+
+			if (this.props.changePasswordShow) {
+				UsersApi.updateUserPassword(data).then(({ status }) => {
+					if (status === 200) {
+						document.location.reload();
+					}
+				});
+			} else {
+				UsersApi.updateUserProfile(data).then(({ status }) => {
+					if (status === 200) {
+						document.location.reload();
+					}
+				});
 			}
 		});
 		buttonBack?.addEventListener('click', () => {
@@ -222,40 +228,9 @@ export default class Profile extends Block {
 		this.profileEvents();
 	}
 
-	clickLink() {
-		document.addEventListener('DOMContentLoaded', () => {
-			this.profileEvents();
-			const linksCollection = document.querySelectorAll<HTMLInputElement>(`.${LINK_ID}`);
-			const linkLogout = document.querySelector(`.${LINK_LOGOUT_ID}`);
-
-			linksCollection.forEach((link, number) => {
-				// При клике на ссылку скрыть их и заменить на кнопку
-				link.addEventListener('click', (e) => {
-					e.preventDefault();
-					this.setProps({ linksShow: false });
-					if (number === 0) {
-						// При клике на первую ссылку убираем атрибут чтобы можно было ввести данные
-						const inputsCollection = document.querySelectorAll<HTMLInputElement>('.js-input');
-						inputsCollection.forEach((input) => {
-							input.removeAttribute('readonly');
-						});
-					}
-					if (number === 1) {
-						this.setProps({ changePasswordShow: true });
-					}
-				});
-			});
-			linkLogout?.addEventListener('click', (e) => {
-				e.preventDefault();
-				AuthApi.logout().then(({ status }) => {
-					if (status === 200) {
-						window.history.pushState({}, '', MAIN_PATH);
-						document.location.reload();
-					}
-				});
-			});
-		});
+	render(): string {
+		return template(this.props);
 	}
 }
 
-export const profilePage = new Profile(data);
+export const profilePage = new Profile(defaultData);

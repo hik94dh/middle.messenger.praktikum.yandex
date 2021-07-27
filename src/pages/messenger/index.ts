@@ -1,71 +1,30 @@
-import Block from '../../modules/block.js';
-import { template } from './template.js';
-import { findInputsForValidation } from '../../utils/validation.js';
+import Block from '../../modules/block';
+import template from './template.hbs';
+import { Modal } from '../../components/Modal/Modal';
+import { Button } from '../../components/Button/Button';
+import { Input } from '../../components/Input/Input';
 
-import { Modal } from '../../components/Modal/Modal.js';
-import { Button } from '../../components/Button/Button.js';
-import { Input } from '../../components/Input/Input.js';
+import ChatsApi from '../../api/chatsApi';
+import AuthApi from '../../api/authApi';
+import { MESSENGER_PATH } from '../../routes/constants';
 
-import ChatsApi from '../../api/chatsApi.js';
-import { MESSENGER_PATH } from '../../routes/constants.js';
+import { store } from '../../modules/store';
+import { WebSocketModule } from '../../modules/webSocket';
+
+const ENTER_MESSAGE_ID = 'enterMessage';
+
+import { getDataFromForm } from '../../utils/getDataFromForm';
 
 const data = {
+	isOpenChat: false,
 	profile: 'Профиль',
 	searchPlaceholder: 'Поиск',
 	headerName: 'Вадим',
 	textareaPlaceholder: 'Сообщение',
 	chat: {
-		isOpen: true,
 		time: '19 июня',
 		emptyChatMessage: 'Выберите чат чтобы отправить сообщение',
 	},
-	messages: [
-		{
-			text:
-				'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.\n        \n          Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-			class: 'chat-dialog_message-item-from',
-			time: '11:56',
-			image: null,
-		},
-		{
-			image: './assets/img/image-1.jpg',
-			time: '11:56',
-		},
-		{
-			text: 'Круто!',
-			class: 'chat-dialog_message-item-to',
-			time: '12:00',
-			icon: true,
-			classForTime: 'chat-dialog_message-item-time-to',
-		},
-	],
-	chats: [
-		{
-			name: 'Андрей',
-			message: 'Изображение',
-			time: '10:49',
-			messagesCount: 2,
-		},
-		{
-			name: 'Киноклуб',
-			message: 'стикер',
-			messageBold: 'Вы:',
-			time: '12:00',
-		},
-		{
-			name: 'Илья',
-			message: 'Друзья, у меня для вас особенный выпуск новостей!...',
-			time: '15:12',
-			messagesCount: 4,
-		},
-		{
-			name: 'Вадим',
-			message: 'Круто!',
-			messageBold: 'Вы:',
-			time: 'Пт',
-			isActive: 'sidebar-chat_is-active',
-		},
-	],
 	modal: new Modal({
 		title: 'Добавить пользователя',
 		input: new Input({
@@ -79,14 +38,46 @@ const data = {
 	buttonEnter: new Button({
 		isCircle: true,
 		class: 'button-circle',
+		id: ENTER_MESSAGE_ID,
 	}).render(),
 };
 
+interface Prop {
+	[items: string]: any;
+}
+
 export default class Messenger extends Block {
+	socket: WebSocketModule;
+
 	constructor(props) {
 		super(template, props);
+		this.socket = null;
 
-		this.addEvents();
+		setInterval(() => {
+			this.setProps(store.state);
+		}, 5000)
+	}
+
+	componentDidMount() {
+		if (document.location.pathname === MESSENGER_PATH) {
+			// при загрузке страницы получаем данные, добавляем в стор
+			AuthApi.user().then(({ response, status }) => {
+				if (status === 200) {
+					const data = JSON.parse(response);
+					// Получаем данные, формируем массив, добавляем в стор
+					store.update({ userId: data.id });
+					this.setProps(store.state);
+				}
+			});
+			ChatsApi.getChats().then(({ response, status }) => {
+				if (status === 200) {
+					const data = JSON.parse(response);
+					// Получаем данные, формируем массив, добавляем в стор
+					store.update({ newChats: data });
+					this.setProps(store.state);
+				}
+			});
+		}
 	}
 
 	messengerEvents() {
@@ -97,6 +88,25 @@ export default class Messenger extends Block {
 		const modal = document.querySelector('.js-modal');
 		const attach = document.querySelector('.chat-dialog_footer-attach');
 		const attachBlock = document.querySelector('.chat-dialog_footer-attach-block');
+		const enterButton = document.getElementById(ENTER_MESSAGE_ID);
+		const addUserButton = document.getElementById('add-user');
+
+		addUserButton?.addEventListener('click', () => {
+			ChatsApi.addUsers({
+				users: [84434],
+				chatId: 104,
+			});
+		});
+
+		enterButton?.addEventListener('click', (e) => {
+			e.preventDefault();
+			const data = getDataFromForm();
+			this.socket.send('message', data.message);
+
+			setTimeout(() => {
+				this.setProps(store.state);
+			}, 100);
+		});
 
 		// при клике на dots показать / скрыть popper и поменять цвет
 		dots?.addEventListener('click', () => {
@@ -115,20 +125,54 @@ export default class Messenger extends Block {
 			attachBlock?.classList.toggle('attach_is-open');
 			attach.classList.toggle('attach_is-open');
 		});
-	}
 
-	addEvents() {
-		document.addEventListener('DOMContentLoaded', () => {
-			this.messengerEvents();
+		const createChat = document.getElementById('create-chat');
+
+		createChat.addEventListener('click', () => {
+			ChatsApi.createChat({ title: 'chatName' }).then((res: Prop) => {
+				if(res.status === 200) {
+					ChatsApi.getChats().then(({ response, status }) => {
+						if (status === 200) {
+							const data = JSON.parse(response);
+							// Получаем данные, формируем массив, добавляем в стор
+
+							store.update({newChats:data})
+							this.setProps(store.state);
+						}
+					})
+				}
+			});
+		});
+
+		const chatListCollection = document.querySelectorAll('.sidebar-chat');
+
+		chatListCollection.forEach((chat) => {
+			chat.addEventListener('click', () => {
+				const activeChatId = chat.getAttribute('chat-id');
+
+				const activeChat = store.state.newChats.find((i) => i.id === Number(activeChatId));
+
+				store.update({ isOpenChat: true, newMessages: [activeChat.last_message] });
+
+				this.setProps(store.state);
+
+				ChatsApi.getChatUsersById(1).then(({ response }) => {
+					const { token } = JSON.parse(response);
+
+					if (token) {
+						this.socket = new WebSocketModule(store.state.userId, 1, token);
+					}
+				});
+			});
 		});
 	}
 
-	componentDidMount() {
-		if (document.location.pathname === MESSENGER_PATH) {
-			ChatsApi.getChats();
-		}
+	addEventsAfterUpdate() {
+		this.messengerEvents();
+	}
 
-		return findInputsForValidation;
+	render(): string {
+		return template(this.props);
 	}
 }
 
