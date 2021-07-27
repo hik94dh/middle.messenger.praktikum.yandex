@@ -1,5 +1,9 @@
-node_modules
-dist
-build
-# Local Netlify folder
-.netlify
+# prod
+/build
+
+# dependencies
+/node_modules
+
+# misc
+.DS_Store
+.idea
