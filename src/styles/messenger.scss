@@ -406,3 +406,10 @@ $var10: #f8f8f8;
 		background: $var6;
 	}
 }
+
+.choose-user input {
+	&:hover {
+		cursor: pointer;
+		opacity: 0.5;
+	}
+}

@@ -5,7 +5,7 @@ import { getDataFromForm } from '../../utils/getDataFromForm';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi';
+import { AuthApi } from '../../api';
 import { MESSENGER_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signInButton';

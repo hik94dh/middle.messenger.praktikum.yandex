@@ -23,8 +23,6 @@ export class WebSocketModule {
 			if (data.type === 'error') return;
 
 			if (data.type === 'message') {
-				// console.log(data);
-				//Array.isArray(data) ? data[0] : data
 				store.update(data, 'push');
 			}
 		});

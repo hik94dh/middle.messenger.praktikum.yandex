@@ -5,7 +5,7 @@ import { getDataFromForm } from '../../utils/getDataFromForm';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi';
+import { AuthApi } from '../../api';
 
 const BUTTON_ID = 'signUpButton';
 
@@ -78,24 +78,8 @@ export default class SignUp extends Block {
 			const button = document.getElementById(BUTTON_ID);
 
 			button?.addEventListener('click', () => {
-				// console.log('store', store)
-				// console.log(qe)
-				// const form = (<HTMLFormElement>document.querySelector('form'));
-				// const inputsCollection = Array.from(form.getElementsByTagName('input'));
-
-				// const qqq = inputsCollection.forEach(i => i.classList.contains('input-error'));
-				// console.log('qqq', inputsCollection)
-
 				const data = getDataFromForm();
 
-				// const data = {
-				// 	first_name: 'string',
-				// 	second_name: 'string',
-				// 	login: 'Login',
-				// 	email: 'string@test.ru',
-				// 	password: 'string',
-				// 	phone: '+712345678',
-				// }
 				AuthApi.signUp(data);
 			});
 		});

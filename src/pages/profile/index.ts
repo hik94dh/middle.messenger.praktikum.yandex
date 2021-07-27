@@ -6,8 +6,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi';
-import UsersApi from '../../api/usersApi';
+import { AuthApi, UsersApi } from '../../api';
 import { PROFILE_PATH, MAIN_PATH } from '../../routes/constants';
 
 const CHANGE_IMAGE_ID = 'changeImage';
@@ -61,28 +60,6 @@ const defaultData = {
 	],
 	changePasswordShow: false,
 	changePasswordList: changePasswordListData.map((props) => new Input(props).render()),
-	modal: new Modal({
-		id: 'profile-image_input',
-		title: 'Загрузите файл',
-		input: new Input({
-			label: 'Выбрать файл на компьютере',
-			class: 'profile-image_input',
-			type: 'file',
-			accept: 'image/*,image/jpeg',
-			multiple: true,
-			name: CHANGE_IMAGE_INPUT_ID,
-			labelId: CHANGE_IMAGE_LABEL_ID,
-		}).render(),
-		hint: {
-			show: true,
-			text: 'Нужно выбрать файл',
-		},
-		button: new Button({
-			text: 'Поменять',
-			type: 'submit',
-			id: CHANGE_IMAGE_BUTTON_ID,
-		}).render(),
-	}).render(),
 };
 
 export default class Profile extends Block {
@@ -132,7 +109,6 @@ export default class Profile extends Block {
 
 	profileEvents() {
 		const changeImage = document.getElementById(CHANGE_IMAGE_ID);
-		const modal = document.querySelector('.js-modal');
 		const changeImageInput = <HTMLInputElement>document.getElementById(CHANGE_IMAGE_INPUT_ID);
 		const changeImageButton = document.getElementById(CHANGE_IMAGE_BUTTON_ID);
 		const saveButton = document.getElementById(SAVE_BUTTON_ID);
@@ -172,7 +148,32 @@ export default class Profile extends Block {
 
 		// При клике на картинку открыть модалку
 		changeImage?.addEventListener('click', () => {
-			modal?.classList.toggle('is-open-modal');
+			store.update({
+				modal: new Modal({
+					isOpen: true,
+					id: 'profile-image_input',
+					title: 'Загрузите файл',
+					input: new Input({
+						label: 'Выбрать файл на компьютере',
+						class: 'profile-image_input',
+						type: 'file',
+						accept: 'image/*,image/jpeg',
+						multiple: true,
+						name: CHANGE_IMAGE_INPUT_ID,
+						labelId: CHANGE_IMAGE_LABEL_ID,
+					}).render(),
+					hint: {
+						show: true,
+						text: 'Нужно выбрать файл',
+					},
+					button: new Button({
+						text: 'Поменять',
+						type: 'submit',
+						id: CHANGE_IMAGE_BUTTON_ID,
+					}).render(),
+				}).render(),
+			});
+			this.setProps(store.state);
 		});
 		changeImageInput?.addEventListener('change', (e) => {
 			const target = e.target as HTMLInputElement;
@@ -220,7 +221,12 @@ export default class Profile extends Block {
 			window.history.back();
 		});
 		modalBackdrop?.addEventListener('click', () => {
-			modal?.classList.toggle('is-open-modal');
+			store.update({
+				modal: new Modal({
+					isOpen: false,
+				}).render(),
+			});
+			this.setProps(store.state);
 		});
 	}
 

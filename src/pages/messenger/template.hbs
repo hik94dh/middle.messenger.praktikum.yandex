@@ -1,15 +1,12 @@
 <div class="chat-page_wrapper">
     <div class="sidebar_wrapper">
         <a href="profile" class="sidebar-link">{{profile}}</a>
-        <div class="sidebar-search">
-            <input type="text" placeholder="{{searchPlaceholder}}">
-        </div>
+<!--        <div class="sidebar-search">-->
+<!--            <input type="text" placeholder="{{searchPlaceholder}}">-->
+<!--        </div>-->
         
         <div class="sidebar-chats_wrapper">
-		<div id="create-chat">Создать чат</div>
-			{{test}}
 			<br/>
-
 			<div>
 				{{#each newChats}}
 				<div class="sidebar-chat" chat-id="{{id}}">
@@ -21,10 +18,9 @@
 				</div>
 				{{/each}}
 			</div>
-
-
         </div>
-		<div id="add-user">Добавить польз</div>
+        <br/>
+        {{{createChatButton}}}
     </div>
     
     <div class="chat-dialog">
@@ -57,14 +53,10 @@
             </nav>
         </div>
         <div class="chat-dialog_messages">
-        <div class="chat-dialog_messages-time">{{chat.time}}</div>
-
-
+        <div class="chat-dialog_messages-time">{{time}}</div>
 			{{#each newMessages}}
 				<div>{{content}}</div>
-
 			{{/each}}
-
         </div>
 
         <div class="chat-dialog_footer-attach-block popper">
@@ -96,7 +88,7 @@
 
     {{else}}
         <div class="chat-dialog_empty">
-            {{chat.emptyChatMessage}}
+            {{emptyChatMessage}}
         </div>
     {{/if}}
     </div>
