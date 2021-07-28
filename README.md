@@ -8,8 +8,19 @@
 
 [Макет](https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1) проекта в Figma
 
+## Запуск проекта
+
+```
+npm run start
+```
+
 ## Запуск тестов
 
 ```
 npm run test
 ```
+
+## Использованные технологии
+
+Webpack, Typescript, SASS, Handlebars, Eslint, Husky, Mocha, Prettier
+

@@ -15,13 +15,14 @@ const CREATE_CHAT = 'createChat';
 const CREATE_CHAT_MODAL_BUTTON = 'createChatModalButton';
 const ADD_USER_BUTTON = 'addUserButton';
 const DELETE_USER_BUTTON = 'deleteUserButton';
+const TEXTAREA_ID = 'textarea';
 
 import { getDataFromForm } from '../../utils/getDataFromForm';
 
 const data = {
 	isOpenChat: false,
+	inFocus: false,
 	profile: 'Профиль',
-	searchPlaceholder: 'Поиск',
 	headerName: '',
 	textareaPlaceholder: 'Сообщение',
 	emptyChatMessage: 'Выберите чат чтобы отправить сообщение',
@@ -35,6 +36,7 @@ const data = {
 		text: 'Создать чат',
 		id: CREATE_CHAT,
 	}).render(),
+	textareaId: TEXTAREA_ID,
 };
 
 interface Prop {
@@ -47,14 +49,15 @@ export default class Messenger extends Block {
 	constructor(props) {
 		super(template, props);
 		this.socket = null;
-
-		// setInterval(() => {
-		// 	this.setProps(store.state);
-		// }, 5000);
 	}
 
 	componentDidMount() {
 		if (document.location.pathname === MESSENGER_PATH) {
+			setInterval(() => {
+				if (store.state.isOpenChat && !store.state.inFocus) {
+					this.setProps(store.state);
+				}
+			}, 1000);
 			// при загрузке страницы получаем данные, добавляем в стор
 			AuthApi.user().then(({ response, status }) => {
 				if (status === 200) {
@@ -86,6 +89,19 @@ export default class Messenger extends Block {
 		const enterButton = document.getElementById(ENTER_MESSAGE_ID);
 		const addUserButton = document.getElementById(ADD_USER_BUTTON);
 		const deleteUserButton = document.getElementById(DELETE_USER_BUTTON);
+		const textArea = document.getElementById(TEXTAREA_ID);
+
+		textArea?.addEventListener('click', () => {
+			if (!store.state.inFocus) {
+				store.update({ inFocus: true });
+			}
+		});
+		textArea?.addEventListener('blur', () => {
+			const data = getDataFromForm();
+			if (data.message && store.state.inFocus) {
+				store.update({ inFocus: false });
+			}
+		});
 
 		modalBackdrop?.addEventListener('click', () => {
 			store.update({

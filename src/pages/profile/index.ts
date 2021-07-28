@@ -194,8 +194,6 @@ export default class Profile extends Block {
 			e.preventDefault();
 			if (!changeImageInput?.files?.length) {
 				changeImageHint?.classList.add('show-hint');
-			} else {
-				console.log('доделать обновление аватара');
 			}
 		});
 

@@ -54,9 +54,13 @@ export default class SignIn extends Block {
 			button?.addEventListener('click', () => {
 				const data = getDataFromForm();
 
-				// const data = {
+				// const firstUser = {
 				// 	login: 'Login',
 				// 	password: 'string',
+				// }
+				// const secondUser = {
+				// 	login: 'SecondLogin',
+				// 	password: 'SecondString',
 				// }
 				AuthApi.signIn(data)
 					.then((res: Prop) => {
