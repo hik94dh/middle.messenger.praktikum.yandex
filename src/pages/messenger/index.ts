@@ -57,7 +57,7 @@ export default class Messenger extends Block {
 				if (store.state.isOpenChat && !store.state.stopPing) {
 					this.setProps(store.state);
 				}
-			}, 1000);
+			}, 5000);
 			// при загрузке страницы получаем данные, добавляем в стор
 			AuthApi.user().then(({ response, status }) => {
 				if (status === 200) {
