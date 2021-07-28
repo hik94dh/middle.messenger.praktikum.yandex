@@ -23,3 +23,5 @@ npm run test
 ## Использованные технологии
 
 Webpack, Typescript, SASS, Handlebars, Eslint, Husky, Mocha, Prettier
+
+Ссылка на пулл-реквест(https://github.com/hik94dh/middle.messenger.praktikum.yandex/pull/1)
