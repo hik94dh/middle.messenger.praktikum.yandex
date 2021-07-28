@@ -23,4 +23,3 @@ npm run test
 ## Использованные технологии
 
 Webpack, Typescript, SASS, Handlebars, Eslint, Husky, Mocha, Prettier
-

@@ -9,6 +9,7 @@ import { MESSENGER_PATH } from '../../routes/constants';
 
 import { store } from '../../modules/store';
 import { WebSocketModule } from '../../modules/webSocket';
+import { getDataFromApi } from '../../utils/getDataFromApi';
 
 const ENTER_MESSAGE_ID = 'enterMessage';
 const CREATE_CHAT = 'createChat';
@@ -60,20 +61,16 @@ export default class Messenger extends Block {
 			}, 5000);
 			// при загрузке страницы получаем данные, добавляем в стор
 			AuthApi.user().then(({ response, status }) => {
-				if (status === 200) {
-					const data = JSON.parse(response);
-					// Получаем данные, формируем массив, добавляем в стор
-					store.update({ userId: data.id });
-					this.setProps(store.state);
-				}
+				const data = getDataFromApi(status, response);
+
+				store.update({ userId: data.id });
+				this.setProps(store.state);
 			});
 			ChatsApi.getChats().then(({ response, status }) => {
-				if (status === 200) {
-					const data = JSON.parse(response);
-					// Получаем данные, формируем массив, добавляем в стор
-					store.update({ newChats: data });
-					this.setProps(store.state);
-				}
+				const data = getDataFromApi(status, response);
+
+				store.update({ newChats: data });
+				this.setProps(store.state);
 			});
 		}
 	}
@@ -119,8 +116,6 @@ export default class Messenger extends Block {
 			const input = <HTMLFormElement>document.querySelector('.js-modal input');
 
 			if (Number(input.value)) {
-				// 83723 - первый
-				// 84434 - второй
 				ChatsApi.addUsers({
 					users: [Number(input.value)],
 					chatId: store.state.activeChatId,
@@ -249,17 +244,15 @@ export default class Messenger extends Block {
 					ChatsApi.createChat({ title: input.value }).then((res: Prop) => {
 						if (res.status === 200) {
 							ChatsApi.getChats().then(({ response, status }) => {
-								if (status === 200) {
-									const data = JSON.parse(response);
-									// Получаем данные, формируем массив, добавляем в стор
-									store.update({
-										newChats: data,
-										modal: new Modal({
-											isOpen: false,
-										}).render(),
-									});
-									this.setProps(store.state);
-								}
+								const data = getDataFromApi(status, response);
+
+								store.update({
+									newChats: data,
+									modal: new Modal({
+										isOpen: false,
+									}).render(),
+								});
+								this.setProps(store.state);
 							});
 						}
 					});

@@ -20,6 +20,7 @@ const LINK_LOGOUT_ID = 'js-link-logout';
 const CHANGE_DATA_LINK_ID = 'changeDataLink';
 const CHANGE_PASSWORD_LINK_ID = 'changePasswordLink';
 import { store } from '../../modules/store';
+import { getDataFromApi } from '../../utils/getDataFromApi';
 
 const changePasswordListData = [
 	{ name: 'oldPassword', label: 'Старый пароль', value: '', type: 'password', placeholder: '••••••••' },
@@ -72,37 +73,35 @@ export default class Profile extends Block {
 	componentDidMount() {
 		if (document.location.pathname === PROFILE_PATH) {
 			AuthApi.user().then(({ response, status }) => {
-				if (status === 200) {
-					const data = JSON.parse(response);
-					// Получаем данные, формируем массив, добавляем в стор
-					const arr = [
-						{ name: 'email', label: 'Почта', value: data.email, type: 'email', attr: 'readonly' },
-						{ name: 'login', label: 'Логин', value: data.login, type: 'text', attr: 'readonly' },
-						{ name: 'first_name', label: 'Имя', value: data.first_name, type: 'text', attr: 'readonly' },
-						{
-							name: 'second_name',
-							label: 'Фамилия',
-							value: data.second_name,
-							type: 'text',
-							attr: 'readonly',
-						},
-						{
-							name: 'display_name',
-							label: 'Имя в чате',
-							value: data.display_name,
-							type: 'text',
-							attr: 'readonly',
-						},
-						{ name: 'phone', label: 'Телефон', value: data.phone, type: 'phone', attr: 'readonly' },
-					];
+				const data = getDataFromApi(status, response);
 
-					store.update({
-						...data,
-						avatarPath: data.avatar,
-						inputs: arr.map((props) => new Input({ ...props, class: 'justify-between flex-row' }).render()),
-					});
-					this.setProps(store.state);
-				}
+				const arr = [
+					{ name: 'email', label: 'Почта', value: data.email, type: 'email', attr: 'readonly' },
+					{ name: 'login', label: 'Логин', value: data.login, type: 'text', attr: 'readonly' },
+					{ name: 'first_name', label: 'Имя', value: data.first_name, type: 'text', attr: 'readonly' },
+					{
+						name: 'second_name',
+						label: 'Фамилия',
+						value: data.second_name,
+						type: 'text',
+						attr: 'readonly',
+					},
+					{
+						name: 'display_name',
+						label: 'Имя в чате',
+						value: data.display_name,
+						type: 'text',
+						attr: 'readonly',
+					},
+					{ name: 'phone', label: 'Телефон', value: data.phone, type: 'phone', attr: 'readonly' },
+				];
+
+				store.update({
+					...data,
+					avatarPath: data.avatar,
+					inputs: arr.map((props) => new Input({ ...props, class: 'justify-between flex-row' }).render()),
+				});
+				this.setProps(store.state);
 			});
 		}
 	}
