@@ -21,7 +21,7 @@ import { getDataFromForm } from '../../utils/getDataFromForm';
 
 const data = {
 	isOpenChat: false,
-	inFocus: false,
+	stopPing: false,
 	profile: 'Профиль',
 	headerName: '',
 	textareaPlaceholder: 'Сообщение',
@@ -54,7 +54,7 @@ export default class Messenger extends Block {
 	componentDidMount() {
 		if (document.location.pathname === MESSENGER_PATH) {
 			setInterval(() => {
-				if (store.state.isOpenChat && !store.state.inFocus) {
+				if (store.state.isOpenChat && !store.state.stopPing) {
 					this.setProps(store.state);
 				}
 			}, 1000);
@@ -92,14 +92,14 @@ export default class Messenger extends Block {
 		const textArea = document.getElementById(TEXTAREA_ID);
 
 		textArea?.addEventListener('click', () => {
-			if (!store.state.inFocus) {
-				store.update({ inFocus: true });
+			if (!store.state.stopPing) {
+				store.update({ stopPing: true });
 			}
 		});
 		textArea?.addEventListener('blur', () => {
 			const data = getDataFromForm();
-			if (data.message && store.state.inFocus) {
-				store.update({ inFocus: false });
+			if (data.message && store.state.stopPing) {
+				store.update({ stopPing: false });
 			}
 		});
 
@@ -108,6 +108,7 @@ export default class Messenger extends Block {
 				modal: new Modal({
 					isOpen: false,
 				}).render(),
+				stopPing: false,
 			});
 			this.setProps(store.state);
 		});
@@ -165,6 +166,11 @@ export default class Messenger extends Block {
 		// при клике на dots показать / скрыть popper и поменять цвет
 		dots?.addEventListener('click', (e) => {
 			e.preventDefault();
+			if (!store.state.stopPing) {
+				store.update({ stopPing: true });
+			} else {
+				store.update({ stopPing: false });
+			}
 			dotsBlock?.classList.toggle('attach_is-open');
 			dots?.classList.toggle('attach_is-open');
 		});
@@ -204,6 +210,11 @@ export default class Messenger extends Block {
 		});
 		// // при клике на attach показать / скрыть popper и поменять цвет
 		attach?.addEventListener('click', () => {
+			if (!store.state.stopPing) {
+				store.update({ stopPing: true });
+			} else {
+				store.update({ stopPing: false });
+			}
 			attachBlock?.classList.toggle('attach_is-open');
 			attach.classList.toggle('attach_is-open');
 		});
@@ -212,6 +223,7 @@ export default class Messenger extends Block {
 
 		createChat.addEventListener('click', () => {
 			store.update({
+				stopPing: true,
 				modal: new Modal({
 					isOpen: true,
 					title: 'Создать чат',
