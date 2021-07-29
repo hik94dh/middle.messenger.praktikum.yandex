@@ -1,6 +1,7 @@
 import Block from '../../modules/block';
 import template from './template.hbs';
 import { getDataFromForm } from '../../utils/getDataFromForm';
+import { redirectToPage } from '../../utils/redirectToPage';
 
 import { Modal } from '../../components/Modal/Modal';
 import { Button } from '../../components/Button/Button';
@@ -137,12 +138,7 @@ export default class Profile extends Block {
 		linkLogout?.addEventListener('click', (e) => {
 			e.preventDefault();
 
-			AuthApi.logout().then(({ status }) => {
-				if (status === 200) {
-					window.history.pushState({}, '', MAIN_PATH);
-					document.location.reload();
-				}
-			});
+			AuthApi.logout().then(({ status }) => redirectToPage(status, MAIN_PATH));
 		});
 
 		// При клике на картинку открыть модалку

@@ -1,11 +1,13 @@
 import Block from '../../modules/block';
 import template from './template.hbs';
 import { getDataFromForm } from '../../utils/getDataFromForm';
+import { redirectToPage } from '../../utils/redirectToPage';
 
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
 import { AuthApi } from '../../api';
+import { MESSENGER_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signUpButton';
 
@@ -80,7 +82,7 @@ export default class SignUp extends Block {
 			button?.addEventListener('click', () => {
 				const data = getDataFromForm();
 
-				AuthApi.signUp(data);
+				AuthApi.signUp(data).then(({ status }) => redirectToPage(status, MESSENGER_PATH));
 			});
 		});
 	}

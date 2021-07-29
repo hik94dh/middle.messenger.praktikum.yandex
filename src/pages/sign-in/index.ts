@@ -1,12 +1,13 @@
 import Block from '../../modules/block';
 import template from './template.hbs';
 import { getDataFromForm } from '../../utils/getDataFromForm';
+import { redirectToPage } from '../../utils/redirectToPage';
 
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
 import { AuthApi } from '../../api';
-import { MESSENGER_PATH } from '../../routes/constants';
+import { MESSENGER_PATH, MAIN_PATH, SIGN_IN_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signInButton';
 
@@ -36,15 +37,19 @@ const data = {
 	}).render(),
 };
 
-interface Prop {
-	[items: string]: any;
-}
-
 export default class SignIn extends Block {
 	constructor(props) {
 		super(template, props);
 
 		this.onClick();
+	}
+
+	componentDidMount() {
+		if (document.location.pathname === MAIN_PATH) {
+			AuthApi.user().then(({ status }) =>
+				redirectToPage(status, status === 200 ? MESSENGER_PATH : SIGN_IN_PATH, true),
+			);
+		}
 	}
 
 	onClick() {
@@ -55,15 +60,7 @@ export default class SignIn extends Block {
 				const data = getDataFromForm();
 
 				AuthApi.signIn(data)
-					.then((res: Prop) => {
-						if (
-							res.status === 200 ||
-							(res.status === 400 && JSON.parse(res.responseText).reason === 'User already in system')
-						) {
-							window.history.pushState({}, '', MESSENGER_PATH);
-							document.location.reload();
-						}
-					})
+					.then(({ status }) => redirectToPage(status, MESSENGER_PATH))
 					.catch((err) => {
 						throw err;
 					});
