@@ -1,36 +1,26 @@
 <div class="chat-page_wrapper">
     <div class="sidebar_wrapper">
         <a href="profile" class="sidebar-link">{{profile}}</a>
-        <div class="sidebar-search">
-            <input type="text" placeholder="{{searchPlaceholder}}">
-        </div>
-        
         <div class="sidebar-chats_wrapper">
-        {{#each chats}}
-            <div class="sidebar-chat {{isActive}}">
-              <div class="sidebar-chat_image"></div>
-              <div class="sidebar-chat_text">
-                <h4>{{name}}</h4>
-                <p>
-                {{#if messageBold}}
-                    <b>{{messageBold}}</b>
-                {{/if}}
-                {{message}}
-                </p>
-              </div>
-              <div class="sidebar-chat_data">
-                <div class="sidebar-chat_data-time">{{time}}</div>
-                {{#if messagesCount}}
-                <div class="sidebar-chat_data-messages">{{messagesCount}}</div>
-                {{/if}}
-              </div>
-            </div>
-        {{/each}}
+			<br/>
+			<div>
+				{{#each newChats}}
+				<div class="sidebar-chat" chat-id="{{id}}">
+					<div class="sidebar-chat_image"></div>
+					<div class="sidebar-chat_text">
+						<h4>{{title}}</h4>
+						<p>{{last_message.content}}</p>
+					</div>
+				</div>
+				{{/each}}
+			</div>
         </div>
+        <br/>
+        {{{createChatButton}}}
     </div>
     
     <div class="chat-dialog">
-    {{#if chat.isOpen}}
+    {{#if isOpenChat}}
         <div class="chat-dialog_header">
             <nav>
               <a href="#" class="chat-dialog_header-link">
@@ -59,29 +49,10 @@
             </nav>
         </div>
         <div class="chat-dialog_messages">
-        <div class="chat-dialog_messages-time">{{chat.time}}</div>
-        
-        {{#each messages}}
-            {{#if image}}
-            <div class="chat-dialog_message-item-image">
-                <img src="{{image}}">
-                <span class="chat-dialog_message-item-time">
-                {{time}}
-                </span>
-            </div>
-            {{else}}
-               <div class="chat-dialog_message-item {{class}}">{{text}}
-                    <span class="chat-dialog_message-item-time {{classForTime}}">
-                    {{#if icon}}
-                        <svg width="12" height="6" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.66648 6.87477L10.2103 0.139168C10.3908 -0.0463894 10.6839 -0.0463894 10.8643 0.139168C11.0452 0.324251 11.0452 0.62513 10.8643 0.810213L3.99532 7.88086C3.8167 8.06405 3.51946 8.06405 3.34084 7.88086L0.135337 4.60679C-0.0451125 4.42171 -0.0451125 4.1213 0.135337 3.93575C0.315787 3.75019 0.608904 3.75019 0.789354 3.93575L3.66648 6.87477ZM7.14111 7.06654L14.1548 0.139864C14.3479 -0.0466214 14.6616 -0.0466214 14.8548 0.139864C15.0484 0.325873 15.0484 0.628256 14.8548 0.814264L7.55877 8.13855C7.3676 8.32265 5.87166 7.56707 5.75484 7.46285C5.64238 7.36252 6.30121 6.77489 6.30121 6.77489C6.50611 6.87518 7.08691 7.12008 7.14111 7.06654Z" fill="#0C8FE4"/>
-                        </svg>
-                    {{/if}}
-                    {{time}}
-                    </span>
-                </div>
-            {{/if}}
-        {{/each}}
+        <div class="chat-dialog_messages-time">{{time}}</div>
+			{{#each newMessages}}
+				<div>{{content}}</div>
+			{{/each}}
         </div>
 
         <div class="chat-dialog_footer-attach-block popper">
@@ -100,16 +71,18 @@
           </li>
         </ul>
         </div>
-        <div class="chat-dialog_footer">
-        <div class="chat-dialog_footer-attach">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
-        </div>
-        <textarea name="message" class="chat-dialog_footer-field" placeholder="{{textareaPlaceholder}}"></textarea>
-        {{{buttonEnter}}}
-        </div>
+
+		<form action="#" class="chat-dialog_footer">
+			<div class="chat-dialog_footer-attach">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M0 0h24v24H0z" fill="none"/><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+			</div>
+			<textarea id="{{textareaId}}" name="message" class="chat-dialog_footer-field" placeholder="{{textareaPlaceholder}}"></textarea>
+			{{{buttonEnter}}}
+		</form>
+
     {{else}}
         <div class="chat-dialog_empty">
-            {{chat.emptyChatMessage}}
+            {{emptyChatMessage}}
         </div>
     {{/if}}
     </div>

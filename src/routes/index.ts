@@ -1,10 +1,10 @@
 import Router from '../modules/router';
-import { signInPage } from '../pages/sign-in/index';
-import { signUpPage } from '../pages/sign-up/index';
-import { profilePage } from '../pages/profile/index';
-import { messengerPage } from '../pages/messenger/index';
-import { page500 } from '../pages/500/index';
-import { page404 } from '../pages/404/index';
+import { signInPage } from '../pages/sign-in';
+import { signUpPage } from '../pages/sign-up';
+import { profilePage } from '../pages/profile';
+import { messengerPage } from '../pages/messenger';
+import { page500 } from '../pages/500';
+import { page404 } from '../pages/404';
 
 import {
 	MAIN_PATH,

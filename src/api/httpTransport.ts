@@ -57,7 +57,7 @@ export class HTTPTransport {
 				xhr.send();
 				return;
 			}
-			if (method === METHODS.POST) {
+			if ([METHODS.POST, METHODS.PUT, METHODS.DELETE].includes(method)) {
 				xhr.send(JSON.stringify(data));
 				return;
 			}

@@ -59,7 +59,7 @@ export default class Block {
 	}
 
 	render(): string {
-		return ''
+		return '';
 	}
 
 	getContent(): HTMLElement {

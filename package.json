@@ -1,9 +1,10 @@
 {
-	"name": "mf.messenger.praktikum.yandex",
+	"name": "middle.messenger.praktikum.yandex",
 	"scripts": {
-		"build": "webpack",
+		"clean": "rimraf build",
+		"build": "npm run clean && webpack",
 		"publish": "node server.js",
-		"start": "npm run build && webpack serve",
+		"start": "webpack serve",
 		"pretty": "npx prettier --write .",
 		"lint:js": "eslint \"src/**/*.+(js|ts)\"",
 		"lint:styles": "stylelint \"src/**/*.scss\"",
@@ -18,15 +19,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/hik94dh/mf.messenger.praktikum.yandex.git"
+		"url": "git+https://github.com/hik94dh/middle.messenger.praktikum.yandex.git"
 	},
 	"bugs": {
-		"url": "https://github.com/hik94dh/mf.messenger.praktikum.yandex/issues"
+		"url": "https://github.com/hik94dh/middle.messenger.praktikum.yandex/issues"
 	},
-	"homepage": "https://github.com/hik94dh/mf.messenger.praktikum.yandex#readme",
+	"homepage": "https://github.com/hik94dh/middle.messenger.praktikum.yandex#readme",
 	"dependencies": {
 		"express": "4.17.1",
-		"handlebars": "4.7.6",
+		"handlebars": "^4.7.7",
 		"sass": "1.32.6",
 		"typescript": "4.1.3"
 	},

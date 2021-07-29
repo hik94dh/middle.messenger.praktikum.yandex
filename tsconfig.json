@@ -9,8 +9,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"alwaysStrict": true,
-		"lib": ["dom", "es6"],
-		"outDir": "static/js",
+		"lib": ["esnext", "dom"],
 		"moduleResolution": "node",
 		"esModuleInterop": true
 	},

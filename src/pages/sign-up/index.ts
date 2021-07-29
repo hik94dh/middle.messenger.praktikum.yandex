@@ -1,11 +1,13 @@
 import Block from '../../modules/block';
 import template from './template.hbs';
-import { findInputsForValidation } from '../../utils/validation';
+import { getDataFromForm } from '../../utils/getDataFromForm';
+import { redirectToPage } from '../../utils/redirectToPage';
 
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi';
+import { AuthApi } from '../../api';
+import { MESSENGER_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signUpButton';
 
@@ -78,20 +80,11 @@ export default class SignUp extends Block {
 			const button = document.getElementById(BUTTON_ID);
 
 			button?.addEventListener('click', () => {
-				AuthApi.signUp({
-					first_name: 'string',
-					second_name: 'string',
-					login: 'Login',
-					email: 'string@test.ru',
-					password: 'string',
-					phone: '+712345678',
-				});
+				const data = getDataFromForm();
+
+				AuthApi.signUp(data).then(({ status }) => redirectToPage(status, MESSENGER_PATH));
 			});
 		});
-	}
-
-	componentDidMount() {
-		return findInputsForValidation;
 	}
 
 	render(): string {

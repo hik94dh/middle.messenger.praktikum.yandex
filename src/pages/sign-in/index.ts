@@ -1,12 +1,13 @@
 import Block from '../../modules/block';
 import template from './template.hbs';
-import { findInputsForValidation } from '../../utils/validation';
+import { getDataFromForm } from '../../utils/getDataFromForm';
+import { redirectToPage } from '../../utils/redirectToPage';
 
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
-import AuthApi from '../../api/authApi';
-import { MESSENGER_PATH } from '../../routes/constants';
+import { AuthApi } from '../../api';
+import { MESSENGER_PATH, MAIN_PATH, SIGN_IN_PATH } from '../../routes/constants';
 
 const BUTTON_ID = 'signInButton';
 
@@ -36,10 +37,6 @@ const data = {
 	}).render(),
 };
 
-interface Prop {
-	[items: string]: unknown;
-}
-
 export default class SignIn extends Block {
 	constructor(props) {
 		super(template, props);
@@ -47,30 +44,28 @@ export default class SignIn extends Block {
 		this.onClick();
 	}
 
+	componentDidMount() {
+		if (document.location.pathname === MAIN_PATH) {
+			AuthApi.user().then(({ status }) =>
+				redirectToPage(status, status === 200 ? MESSENGER_PATH : SIGN_IN_PATH, true),
+			);
+		}
+	}
+
 	onClick() {
 		document.addEventListener('DOMContentLoaded', () => {
 			const button = document.getElementById(BUTTON_ID);
 
 			button?.addEventListener('click', () => {
-				AuthApi.signIn({
-					login: 'Login',
-					password: 'string',
-				})
-					.then((res: Prop) => {
-						if (res.status === 200) {
-							window.history.pushState({}, '', MESSENGER_PATH);
-							document.location.reload();
-						}
-					})
+				const data = getDataFromForm();
+
+				AuthApi.signIn(data)
+					.then(({ status }) => redirectToPage(status, MESSENGER_PATH))
 					.catch((err) => {
 						throw err;
 					});
 			});
 		});
-	}
-
-	componentDidMount() {
-		return findInputsForValidation;
 	}
 
 	render(): string {
